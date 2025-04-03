@@ -31,7 +31,7 @@ jobs:
           echo KEYSTORE_ALIAS_PASSWORD='${{ secrets.KEYSTORE_PASSWORD_ALIAS }}' >> signing.properties
           echo KEYSTORE_FILE=../key.jks >> signing.properties
           
-          echo '${{ secrets.KEYSTORE_FILE }}' > keystore.jks.asc
+          echo '${{ secrets.KEYSTORE_FILE }}' | base64 -d > keystore.jks.asc
           gpg -d --passphrase '${{ secrets.KEYSTORE_PASSWORD_GPG }}' --batch keystore.jks.asc > key.jks
 
       - name: set up JDK 17
