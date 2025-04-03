@@ -4,4 +4,3 @@
 [submodule "api"]
 	path = api
 	url = https://github.com/yangFenTuoZi/Shizuku-API
-	branch = master
