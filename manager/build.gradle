@@ -24,6 +24,7 @@ android {
     buildFeatures {
         viewBinding true
         prefab true
+        buildConfig true
     }
     signingConfigs {
         sign
