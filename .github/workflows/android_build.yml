@@ -18,7 +18,7 @@ jobs:
       - name: Checkout Forked Repo
         uses: actions/checkout@v4
         with:
-          repository: pixincreate/Shizuku
+          repository: yangFenTuoZi/Shizuku
           ref: master
           fetch-depth: 0
           submodules: true
