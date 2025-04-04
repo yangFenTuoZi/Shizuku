@@ -7,6 +7,16 @@ VISIT THE OFFICIAL REPO [**_HERE_**](https://github.com/RikkaApps/Shizuku)
 
 THIS FORK SOLELY EXISTS FOR PERSONAL USE CASE.
 
+### Changes from [the upstream repository](https://github.com/pixincreate/Shizuku)
+
+- Auto-start on non-root devices
+- Auto-build and publish APK to GitHub Releases via GitHub Actions
+
+### Changes from this repository
+
+- Randomize `/data/local/tmp/shizuku` folder name
+- Auto-delete `/data/local/tmp/shizuku_starter` file
+
 ### Usage of auto-start
 
 - Follow the instructions for setting up Shizuku through Wireless ADB by pairing the app
