@@ -73,10 +73,8 @@ class SelfStarterService : Service(), LifecycleOwner {
         return null
     }
 
-
-    override fun getLifecycle(): Lifecycle {
-        return lifecycleOwner
-    }
+    override val lifecycle: Lifecycle
+        get() = lifecycleOwner
 
     private fun postResult(throwable: Throwable? = null) {
         if (throwable == null)
