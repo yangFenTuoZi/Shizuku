@@ -14,7 +14,6 @@ import moe.shizuku.manager.adb.AdbProtocol.A_STLS
 import moe.shizuku.manager.adb.AdbProtocol.A_STLS_VERSION
 import moe.shizuku.manager.adb.AdbProtocol.A_VERSION
 import moe.shizuku.manager.adb.AdbProtocol.A_WRTE
-import moe.shizuku.manager.ktx.logd
 import rikka.core.util.BuildUtils
 import java.io.Closeable
 import java.io.DataInputStream
@@ -78,6 +77,27 @@ class AdbClient(private val host: String, private val port: Int, private val key
         }
 
         if (message.command != A_CNXN) error("not A_CNXN")
+    }
+
+    fun root(): Boolean {
+        val localId = 1
+        write(A_OPEN, localId, 0, "root:")
+
+        var message = read()
+        when (message.command) {
+            A_OKAY -> {
+                Log.d(TAG, "root request accepted")
+                return true
+            }
+            A_CLSE -> {
+                Log.d(TAG, "root request rejected")
+                return false
+            }
+            else -> {
+                error("not A_OKAY or A_CLSE")
+                return false
+            }
+        }
     }
 
     fun shellCommand(command: String, listener: ((ByteArray) -> Unit)?) {

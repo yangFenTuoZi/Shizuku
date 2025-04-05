@@ -17,6 +17,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import moe.shizuku.manager.BuildConfig
 import moe.shizuku.manager.ShizukuSettings
+import moe.shizuku.manager.ShizukuSettings.ADB_ROOT
+import moe.shizuku.manager.ShizukuSettings.getPreferences
 import moe.shizuku.manager.adb.AdbClient
 import moe.shizuku.manager.adb.AdbKey
 import moe.shizuku.manager.adb.AdbKeyException
@@ -89,7 +91,7 @@ class SelfStarterService : Service(), LifecycleOwner {
 
         GlobalScope.launch(Dispatchers.IO) {
             val key = try {
-                AdbKey(PreferenceAdbKeyStore(ShizukuSettings.getPreferences()), "shizuku")
+                AdbKey(PreferenceAdbKeyStore(getPreferences()), "shizuku")
             } catch (e: Throwable) {
                 e.printStackTrace()
                 sb.append('\n').append(Log.getStackTraceString(e))
@@ -98,6 +100,20 @@ class SelfStarterService : Service(), LifecycleOwner {
                 return@launch
             }
 
+            if (getPreferences().getBoolean(ADB_ROOT, false)) {
+                AdbClient(host, port, key).runCatching {
+                    connect()
+                    sb.append(if (root()) "root request accepted" else "root request rejected")
+                        .append("\n")
+                    postResult()
+                    close()
+                }.onFailure {
+                    it.printStackTrace()
+
+                    sb.append('\n').append(Log.getStackTraceString(it))
+                    postResult(it)
+                }
+            }
             AdbClient(host, port, key).runCatching {
                 connect()
 
@@ -126,6 +142,20 @@ class SelfStarterService : Service(), LifecycleOwner {
 
                 Starter.writeDataFiles(moe.shizuku.manager.application, true)
 
+                if (getPreferences().getBoolean(ADB_ROOT, false)) {
+                    AdbClient(host, port, key).runCatching {
+                        connect()
+                        sb.append(if (root()) "root request accepted" else "root request rejected")
+                            .append("\n")
+                        postResult()
+                        close()
+                    }.onFailure {
+                        it.printStackTrace()
+
+                        sb.append('\n').append(Log.getStackTraceString(it))
+                        postResult(it)
+                    }
+                }
                 AdbClient(host, port, key).runCatching {
                     connect()
                     shellCommand(Starter.dataCommand) {

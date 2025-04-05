@@ -25,6 +25,7 @@ public class ShizukuSettings {
     public static final String LANGUAGE = "language";
     public static final String KEEP_START_ON_BOOT = "start_on_boot";
     public static final String KEEP_START_ON_BOOT_WIRELESS = "start_on_boot_wireless";
+    public static final String ADB_ROOT = "adb_root";
 
     private static SharedPreferences sPreferences;
 

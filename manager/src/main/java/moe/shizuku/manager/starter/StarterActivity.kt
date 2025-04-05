@@ -15,6 +15,8 @@ import moe.shizuku.manager.AppConstants.EXTRA
 import moe.shizuku.manager.BuildConfig
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
+import moe.shizuku.manager.ShizukuSettings.ADB_ROOT
+import moe.shizuku.manager.ShizukuSettings.getPreferences
 import moe.shizuku.manager.adb.AdbClient
 import moe.shizuku.manager.adb.AdbKey
 import moe.shizuku.manager.adb.AdbKeyException
@@ -182,6 +184,20 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
                 return@launch
             }
 
+            if (getPreferences().getBoolean(ADB_ROOT, false)) {
+                AdbClient(host, port, key).runCatching {
+                    connect()
+                    sb.append(if (root()) "root request accepted" else "root request rejected")
+                        .append("\n")
+                    postResult()
+                    close()
+                }.onFailure {
+                    it.printStackTrace()
+
+                    sb.append('\n').append(Log.getStackTraceString(it))
+                    postResult(it)
+                }
+            }
             AdbClient(host, port, key).runCatching {
                 connect()
                 shellCommand(Starter.sdcardCommand) {
@@ -209,6 +225,20 @@ private class ViewModel(context: Context, root: Boolean, host: String?, port: In
 
                 Starter.writeDataFiles(application, true)
 
+                if (getPreferences().getBoolean(ADB_ROOT, false)) {
+                    AdbClient(host, port, key).runCatching {
+                        connect()
+                        sb.append(if (root()) "root request accepted" else "root request rejected")
+                            .append("\n")
+                        postResult()
+                        close()
+                    }.onFailure {
+                        it.printStackTrace()
+
+                        sb.append('\n').append(Log.getStackTraceString(it))
+                        postResult(it)
+                    }
+                }
                 AdbClient(host, port, key).runCatching {
                     connect()
                     shellCommand(Starter.dataCommand) {

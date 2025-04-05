@@ -23,6 +23,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import moe.shizuku.manager.BuildConfig
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
+import moe.shizuku.manager.ShizukuSettings.ADB_ROOT
 import moe.shizuku.manager.ShizukuSettings.KEEP_START_ON_BOOT
 import moe.shizuku.manager.ShizukuSettings.KEEP_START_ON_BOOT_WIRELESS
 import moe.shizuku.manager.app.ThemeHelper
@@ -55,6 +56,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private lateinit var blackNightThemePreference: TwoStatePreference
     private lateinit var startOnBootPreference: TwoStatePreference
     private lateinit var startOnBootWirelessPreference: TwoStatePreference
+    private lateinit var adbRoot: TwoStatePreference
     private lateinit var startupPreference: PreferenceCategory
     private lateinit var translationPreference: Preference
     private lateinit var translationContributorsPreference: Preference
@@ -73,6 +75,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         blackNightThemePreference = findPreference(KEY_BLACK_NIGHT_THEME)!!
         startOnBootPreference = findPreference(KEEP_START_ON_BOOT)!!
         startOnBootWirelessPreference = findPreference(KEEP_START_ON_BOOT_WIRELESS)!!
+        adbRoot = findPreference(ADB_ROOT)!!
         startupPreference = findPreference("startup")!!
         translationPreference = findPreference("translation")!!
         translationContributorsPreference = findPreference("translation_contributors")!!
