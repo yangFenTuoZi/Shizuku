@@ -17,7 +17,7 @@ jobs:
       - name: Checkout Forked Repo
         uses: actions/checkout@v4
         with:
-          repository: pixincreate/Shizuku
+          repository: yangFenTuoZi/Shizuku
           ref: master
           fetch-depth: "0"
           submodules: true
@@ -27,7 +27,7 @@ jobs:
 
       - name: Fetch from Upstream
         run: |
-          git remote add upstream https://github.com/RikkaApps/Shizuku.git
+          git remote add upstream https://github.com/pixincreate/Shizuku.git
           git fetch upstream master
           upstream_commit="$(git rev-parse upstream/master)"
           echo "Upstream latest commit: ${upstream_commit}"

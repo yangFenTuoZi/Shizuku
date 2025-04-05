@@ -3,8 +3,6 @@ name: App
 on:
   push:
     branches: [ master ]
-    paths-ignore:
-      - '.github/ISSUE_TEMPLATE'
 
 jobs:
   build:
