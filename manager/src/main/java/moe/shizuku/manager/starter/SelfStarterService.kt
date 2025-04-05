@@ -40,7 +40,7 @@ class SelfStarterService : Service(), LifecycleOwner {
         super.onCreate()
 
         val host = "127.0.0.1"
-        val startOnBootWirelessIsEnabled = ShizukuSettings.getPreferences().getBoolean(ShizukuSettings.KEEP_START_ON_BOOT_WIRELESS, false)
+        val startOnBootWirelessIsEnabled = getPreferences().getBoolean(ShizukuSettings.KEEP_START_ON_BOOT_WIRELESS, false)
         if (startOnBootWirelessIsEnabled && Settings.Global.getInt(this.contentResolver, "adb_wifi_enabled") == 1) {
             Starter.writeSdcardFiles(applicationContext)
 
