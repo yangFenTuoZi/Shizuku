@@ -3,11 +3,13 @@ name: App
 on:
   push:
     branches: [ master ]
+    paths-ignore:
+      - '.github/ISSUE_TEMPLATE'
 
 jobs:
   build:
     runs-on: ubuntu-20.04
-    if: ${{ !startsWith(github.event.head_commit.message, '[skip ci]') && github.repository_owner == 'RikkaApps' }}
+    if: ${{ !startsWith(github.event.head_commit.message, '[skip ci]') && github.repository_owner == 'yangFenTuoZi' }}
 
     steps:
       - name: Checkout
