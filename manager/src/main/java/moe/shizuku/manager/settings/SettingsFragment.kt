@@ -5,6 +5,8 @@ import android.content.pm.PackageManager
 import android.widget.Toast
 import android.content.ComponentName
 import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
@@ -17,6 +19,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.preference.*
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import moe.shizuku.manager.BuildConfig
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.ShizukuSettings.KEEP_START_ON_BOOT
@@ -28,11 +32,16 @@ import moe.shizuku.manager.ktx.isComponentEnabled
 import moe.shizuku.manager.ktx.setComponentEnabled
 import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.receiver.BootCompleteReceiver
+import moe.shizuku.manager.starter.Starter
 import moe.shizuku.manager.utils.CustomTabsHelper
+import moe.shizuku.manager.utils.ShizukuSystemApis
+import rikka.core.util.ClipboardUtils
 import rikka.core.util.ResourceUtils
+import rikka.html.text.HtmlCompat
 import rikka.material.app.LocaleDelegate
 import rikka.recyclerview.addEdgeSpacing
 import rikka.recyclerview.fixEdgeEffect
+import rikka.shizuku.Shizuku
 import rikka.shizuku.manager.ShizukuLocales
 import rikka.widget.borderview.BorderRecyclerView
 import java.util.*
@@ -85,7 +94,61 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     if (newValue is Boolean) {
                         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_SECURE_SETTINGS) != PackageManager.PERMISSION_GRANTED) {
                             Log.i(ShizukuSettings.NAME, "Start on Boot Wireless without granting WRITE_SECURE_SETTINGS permission")
-                            Toast.makeText(context, "WRITE_SECURE_SETTINGS permission is not granted for Shizuku", Toast.LENGTH_SHORT).show()
+
+                            val dialog = MaterialAlertDialogBuilder(context)
+                                .setMessage("""
+                                    <h1>Note</h1>
+                                    <p>This feature requires <u><tt>WRITE_SECURE_SETTINGS</tt></u> permission.</p>
+                                    <h3>Warning</h3>
+                                    <p><u><tt>WRITE_SECURE_SETTINGS</tt></u> is a very sensitive permission and enable it only if you know what you're doing. I'm not responsible for whatever may happen later on.</p>
+                                    """.trimIndent().toHtml())
+
+                            val click : DialogInterface.OnClickListener = DialogInterface.OnClickListener { dialog, which ->
+                                val command = "adb shell pm grant " + BuildConfig.APPLICATION_ID + " android.permission.WRITE_SECURE_SETTINGS"
+                                MaterialAlertDialogBuilder(context)
+                                    .setTitle(R.string.home_adb_button_view_command)
+                                    .setMessage(
+                                        HtmlCompat.fromHtml(
+                                            context.getString(
+                                                R.string.home_adb_dialog_view_command_message,
+                                                command
+                                            )
+                                        )
+                                    )
+                                    .setPositiveButton(R.string.home_adb_dialog_view_command_copy_button) { _, _ ->
+                                        if (ClipboardUtils.put(context, command)) {
+                                            Toast.makeText(
+                                                context,
+                                                context.getString(R.string.toast_copied_to_clipboard, command),
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                    }
+                                    .setNegativeButton(android.R.string.cancel, null)
+                                    .setNeutralButton(R.string.home_adb_dialog_view_command_button_send) { _, _ ->
+                                        var intent = Intent(Intent.ACTION_SEND)
+                                        intent.type = "text/plain"
+                                        intent.putExtra(Intent.EXTRA_TEXT, command)
+                                        intent = Intent.createChooser(
+                                            intent,
+                                            context.getString(R.string.home_adb_dialog_view_command_button_send)
+                                        )
+                                        context.startActivity(intent)
+                                    }
+                                    .show()
+                            }
+                            if (Shizuku.pingBinder()) {
+                                dialog.setNeutralButton("Cancel") { dialog, which -> }
+                                    .setNegativeButton("Manual", click)
+                                    .setPositiveButton("Auto") { dialog, which ->
+                                        Log.i(ShizukuSettings.NAME, "Grant manager WRITE_SECURE_SETTINGS permission")
+                                        ShizukuSystemApis.grantRuntimePermission(BuildConfig.APPLICATION_ID, Manifest.permission.WRITE_SECURE_SETTINGS, 0)
+                                    }
+                            } else {
+                                dialog.setNegativeButton("Cancel") { dialog, which -> }
+                                    .setPositiveButton("Manual", click)
+                            }
+                            dialog.show()
                             startOnBootWirelessPreference.isChecked = false
                             return@OnPreferenceChangeListener false
                         }
