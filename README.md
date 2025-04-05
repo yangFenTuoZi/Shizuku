@@ -16,6 +16,7 @@ THIS FORK SOLELY EXISTS FOR PERSONAL USE CASE.
 
 - Randomize `/data/local/tmp/shizuku` folder name
 - Auto-delete `/data/local/tmp/shizuku_starter` file
+- ADB root on userdebug/custom ROMs
 
 ### Usage of auto-start
 
