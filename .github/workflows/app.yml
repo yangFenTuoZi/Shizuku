@@ -25,7 +25,7 @@ jobs:
           cache: 'gradle'
       - name: Write temporary key
         run: |
-          keytool -genkey -alias a -dname CN=_ -storepass passwd -keypass passwd -keystore key.jks
+          keytool -genkey -alias a -dname CN=_ -storepass passwd -keypass passwd -keystore key.jks -keyalg RSA
           echo KEYSTORE_PASSWORD=passwd >> signing.properties
           echo KEYSTORE_ALIAS=a >> signing.properties
           echo KEYSTORE_ALIAS_PASSWORD=passwd >> signing.properties
