@@ -84,6 +84,10 @@
     <string name="home_root_description_sui"><![CDATA[如果您正在使用 Magisk，可以尝试 %1$s。对于 root 用户，它将最终取代 Shizuku。注意，已有的应用需要一点点修改来使用 %2$s。]]></string>
     <string name="settings_start_on_boot_summary">对于已 root 设备，Shizuku 可以开机启动</string>
     <string name="settings_start_on_boot">开机启动（root）</string>
+    <string name="settings_start_on_boot_wireless">开机启动（无线调试）</string>
+    <string name="settings_start_on_boot_wireless_summary">对于未 root 设备，Shizuku 可以开机启动</string>
+    <string name="settings_adb_root">ADB Root</string>
+    <string name="settings_adb_root_summary">在 userdebug 或自定义 ROM 上，Shizuku 可以使用 adb 来启动 root 级别的 Shizuku 服务</string>
     <string name="permission_warning_template"><![CDATA[要允许<b>%1$s</b>%2$s吗？]]></string>
     <string name="grant_dialog_button_allow_always">始终允许</string>
     <string name="grant_dialog_button_deny">拒绝</string>
@@ -128,4 +132,8 @@
     <string name="home_app_management_empty">已请求或声明 Shizuku 的应用程序将显示在此处。</string>
     <string name="home_adb_is_limited_title">您需要进行额外的步骤</string>
     <string name="home_adb_is_limited_description">您的设备制造商限制了 adb 的权限，使用 Shizuku 的应用无法正常工作。\n\n通常，在“开发者选项”中调整一些选项即可解除此限制。请阅读帮助来了解具体的操作方式。\n\n您可能需要重新启动 Shizuku 以使操作生效。</string>
+    <string name="cancel">取消</string>
+    <string name="manual">手动</string>
+    <string name="auto">自动</string>
+    <string name="settings_grant_note"><![CDATA[<h1>注意</h1>\n<p>此功能需要 <u><tt>WRITE_SECURE_SETTINGS</tt></u> 权限。</p>\n<h1>警告</h1>\n<p><u><tt>WRITE_SECURE_SETTINGS</tt></u> 是高度敏感的权限，仅在明确操作风险时启用。后续可能产生的任何后果均由用户自行承担。</p>]]></string>
 </resources>
