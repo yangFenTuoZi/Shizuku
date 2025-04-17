@@ -23,7 +23,7 @@ jobs:
           submodules: true
 
       - name: Setup Git
-        run: git config --global user.email ${{ secrets.EMAIL }} && git config --global user.name PiX
+        run: git config --global user.email "140885477+yangFenTuoZi@users.noreply.github.com" && git config --global user.name yangFenTuoZi
 
       - name: Fetch from Upstream
         run: |
