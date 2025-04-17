@@ -46,9 +46,6 @@ android {
             path 'src/main/jni/CMakeLists.txt'
         }
     }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
     packagingOptions {
         jniLibs {
             excludes += ['/kotlin/**']
@@ -143,8 +140,8 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test:runner:1.6.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2'
 
     implementation project(':server')
     implementation project(':rish')
@@ -159,13 +156,11 @@ dependencies {
     compileOnly libs.hidden.stub
 
     implementation 'androidx.browser:browser:1.8.0'
-    implementation 'androidx.core:core-ktx:1.15.0'
+    implementation 'androidx.core:core-ktx:1.16.0'
     implementation 'androidx.fragment:fragment-ktx:1.8.6'
     implementation 'androidx.recyclerview:recyclerview:1.4.0'
-    //noinspection GradleDependency
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
-    //noinspection GradleDependency
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.7.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.8.7'
     implementation 'androidx.preference:preference-ktx:1.2.1'
 
     implementation 'com.google.android.material:material:1.12.0'
@@ -175,7 +170,7 @@ dependencies {
     implementation 'dev.rikka.rikkax.appcompat:appcompat:1.6.1'
     implementation 'dev.rikka.rikkax.compatibility:compatibility:2.0.0'
     implementation 'dev.rikka.rikkax.core:core-ktx:1.4.1'
-    implementation 'dev.rikka.rikkax.material:material:2.7.0'
+    implementation 'dev.rikka.rikkax.material:material:2.7.2'
     implementation 'dev.rikka.rikkax.material:material-preference:2.0.0'
     implementation 'dev.rikka.rikkax.html:html-ktx:1.1.2'
     implementation 'dev.rikka.rikkax.recyclerview:recyclerview-adapter:1.3.0'
@@ -188,10 +183,10 @@ dependencies {
     implementation 'dev.rikka.rikkax.lifecycle:lifecycle-shared-viewmodel:1.0.1'
     implementation 'dev.rikka.rikkax.lifecycle:lifecycle-viewmodel-lazy:2.0.0'
 
-    implementation 'io.github.vvb2060.ndk:boringssl:2.1'
+    implementation 'io.github.vvb2060.ndk:boringssl:20250114'
     implementation 'dev.rikka.ndk.thirdparty:cxx:1.2.0'
 
-    implementation 'org.lsposed.hiddenapibypass:hiddenapibypass:4.3'
+    implementation 'org.lsposed.hiddenapibypass:hiddenapibypass:6.1'
 
     implementation 'org.bouncycastle:bcpkix-jdk15on:1.70'
 

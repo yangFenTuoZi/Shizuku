@@ -17,8 +17,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import moe.shizuku.manager.BuildConfig
 import moe.shizuku.manager.ShizukuSettings
-import moe.shizuku.manager.ShizukuSettings.ADB_ROOT
-import moe.shizuku.manager.ShizukuSettings.getPreferences
 import moe.shizuku.manager.adb.AdbClient
 import moe.shizuku.manager.adb.AdbKey
 import moe.shizuku.manager.adb.AdbKeyException
@@ -40,7 +38,7 @@ class SelfStarterService : Service(), LifecycleOwner {
         super.onCreate()
 
         val host = "127.0.0.1"
-        val startOnBootWirelessIsEnabled = getPreferences().getBoolean(ShizukuSettings.KEEP_START_ON_BOOT_WIRELESS, false)
+        val startOnBootWirelessIsEnabled = ShizukuSettings.getPreferences().getBoolean(ShizukuSettings.KEEP_START_ON_BOOT_WIRELESS, false)
         if (startOnBootWirelessIsEnabled && Settings.Global.getInt(this.contentResolver, "adb_wifi_enabled") == 1) {
             Starter.writeSdcardFiles(applicationContext)
 
@@ -91,7 +89,7 @@ class SelfStarterService : Service(), LifecycleOwner {
 
         GlobalScope.launch(Dispatchers.IO) {
             val key = try {
-                AdbKey(PreferenceAdbKeyStore(getPreferences()), "shizuku")
+                AdbKey(PreferenceAdbKeyStore(ShizukuSettings.getPreferences()), "shizuku")
             } catch (e: Throwable) {
                 e.printStackTrace()
                 sb.append('\n').append(Log.getStackTraceString(e))
@@ -100,7 +98,7 @@ class SelfStarterService : Service(), LifecycleOwner {
                 return@launch
             }
 
-            if (getPreferences().getBoolean(ADB_ROOT, false)) {
+            if (ShizukuSettings.getPreferences().getBoolean(ShizukuSettings.ADB_ROOT, false)) {
                 AdbClient(host, port, key).runCatching {
                     connect()
                     sb.append(if (root()) "root request accepted" else "root request rejected")
@@ -142,7 +140,7 @@ class SelfStarterService : Service(), LifecycleOwner {
 
                 Starter.writeDataFiles(moe.shizuku.manager.application, true)
 
-                if (getPreferences().getBoolean(ADB_ROOT, false)) {
+                if (ShizukuSettings.getPreferences().getBoolean(ShizukuSettings.ADB_ROOT, false)) {
                     AdbClient(host, port, key).runCatching {
                         connect()
                         sb.append(if (root()) "root request accepted" else "root request rejected")

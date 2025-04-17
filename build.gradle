@@ -1,6 +1,6 @@
 buildscript {
     apply from: 'api/manifest.gradle'
-    ext.kotlinVersion = '1.8.0'
+    ext.kotlinVersion = '2.1.20'
     repositories {
         google()
         mavenCentral()
@@ -42,14 +42,21 @@ subprojects {
             compileSdk = 35
             defaultConfig {
                 minSdk = 23
-                targetSdk = 33
+                targetSdk = 35
             }
             compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_17
-                targetCompatibility = JavaVersion.VERSION_17
+                sourceCompatibility = JavaVersion.VERSION_21
+                targetCompatibility = JavaVersion.VERSION_21
             }
             buildFeatures {
                 aidl true
+            }
+        }
+    }
+    afterEvaluate {
+        if (plugins.hasPlugin('kotlin-android') || plugins.hasPlugin('org.jetbrains.kotlin.android')) {
+            kotlin {
+                jvmToolchain(21)
             }
         }
     }
@@ -64,7 +71,7 @@ def gitCommitCount = Integer.parseInt('git rev-list --count HEAD'.execute([], pr
 def baseVersionName = "${api_version_major}.5.5"
 ext {
     minSdkVersion = 23
-    targetSdkVersion = 33
+    targetSdkVersion = 35
     versionCode = gitCommitCount
     versionName = "${baseVersionName}.r${gitCommitCount}.${gitCommitId}"
 }

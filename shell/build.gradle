@@ -28,8 +28,8 @@ android {
     }
 }
 
-android.applicationVariants.all { variant ->
-    variant.outputs.all {
+android.applicationVariants.configureEach { variant ->
+    variant.outputs.configureEach {
         outputFileName = "shizuku-v${versionName}.apk"
 
         def outDir = new File(rootDir, "out")

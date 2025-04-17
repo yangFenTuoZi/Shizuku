@@ -52,7 +52,7 @@
     <string name="adb_pairing_tutorial_content_notification_blocked">The pairing process needs you to interact with a notification from Shizuku. Please allow Shizuku to post notifications.</string>
     <string name="adb_pairing_tutorial_content_miui">MIUI users may need to switch notification style to \"Android\" from \"Notification\" - \"Notification shade\" in system settings.</string>
     <string name="adb_pairing_tutorial_content_miui_2">Otherwise, you may not able to enter paring code from the notification.</string>
-    <string name="adb_pairing_tutorial_content_left_is_clickable">Please note that only tapping the switch on the right side of the \'Wireless debugging\' option is incorrect. You need to click on the left part of the option, which will open a new page.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Please note that only the left part of the \"Wireless debugging\" option is clickable, tapping it will open a new page. Only toggling the switch on the right is incorrect.</string>
     <string name="adb_pairing_tutorial_content_finish">Back to Shizuku and start Shizuku.</string>
     <string name="adb_pairing_tutorial_content_network">Shizuku needs to access local network. It is controlled by the network permission.</string>
     <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Some systems (such as MIUI) disallow apps to access the network when they are not visible, even if the app uses foreground service as standard. Please disable battery optimization features for Shizuku on such systems.</string>
@@ -116,8 +116,6 @@ With %1$s, in any terminal app, you can connect to and interact with the shell r
     <string name="settings_use_system_color">Use system theme color</string>
     <string name="settings_start_on_boot_wireless">Start on boot (wireless ADB)</string>
     <string name="settings_start_on_boot_wireless_summary">For rootless devices, Shizuku is able to start automatically on boot</string>
-    <string name="settings_adb_root">ADB Root</string>
-    <string name="settings_adb_root_summary">On userdebug/custom ROMs, Shizuku can run adb as root to start a root-level Shizuku server.</string>
     <string name="enable_wifi_first">Enable Wi-Fi to proceed</string>
 
     <!-- About -->
@@ -170,9 +168,5 @@ With %1$s, in any terminal app, you can connect to and interact with the shell r
     <string name="dialog_requesting_legacy_title">%1$s is requesting legacy Shizuku</string>
     <string name="dialog_requesting_legacy_message"><![CDATA[<b>%1$s</b> has modern Shizuku support, but it\'s requesting legacy Shizuku. This could because Shizuku is not running, please check in Shizuku app.<p>Legacy Shizuku has been deprecated since March 2019.]]></string>
     <string name="dialog_requesting_legacy_button_open_shizuku">Open Shizuku</string>
-    <string name="cancel">Cancel</string>
-    <string name="manual">Manual</string>
-    <string name="auto">Auto</string>
-    <string name="settings_grant_note"><![CDATA[<h1>Note</h1>\n<p>This feature requires <u><tt>WRITE_SECURE_SETTINGS</tt></u> permission.</p>\n<h1>Warning</h1>\n<p><u><tt>WRITE_SECURE_SETTINGS</tt></u> is a very sensitive permission and enable it only if you know what you\'re doing. I\'m not responsible for whatever may happen later on.</p>]]></string>
 
 </resources>
